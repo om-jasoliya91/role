@@ -147,7 +147,7 @@
         </form>
 
         <div class="mt-3">
-            <p>Already have an account? <a href="<?= base_url('login') ?>">Login here</a></p>
+            <p>Already have account? <a href="<?= base_url('login') ?>">Login here</a></p>
         </div>
     </div>
 </body>
