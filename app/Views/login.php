@@ -13,21 +13,32 @@
             <div class="card shadow p-4">
                 <h3 class="card-title text-center mb-4">Login</h3>
 
+                <!-- Flash Messages -->
                 <?php if (session()->getFlashdata('error')): ?>
-                <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+                    <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
                 <?php endif; ?>
 
                 <?php if (session()->getFlashdata('success')): ?>
-                <div class="alert alert-success"><?= esc(session()->getFlashdata('success')) ?></div>
+                    <div class="alert alert-success"><?= esc(session()->getFlashdata('success')) ?></div>
                 <?php endif; ?>
 
+                <?php if (isset($errors) && is_array($errors)): ?>
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            <?php foreach ($errors as $error): ?>
+                                <li><?= esc($error) ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+
+                <!-- Login Form -->
                 <form method="post" action="<?= base_url('login') ?>">
                     <?= csrf_field() ?>
 
                     <div class="mb-3">
-                        <label class="form-label">Username or Email</label>
-                        <input type="text" name="username_email" class="form-control"
-                           required>
+                        <label class="form-label">Email</label>
+                        <input type="text" name="email" value="<?= old('email') ?>" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
@@ -44,14 +55,12 @@
                     </div>
 
                     <div class="text-center mt-3">
-                        <a href="<?= base_url('register') ?>">Don't have an account? Register</a> |
-                        <a href="<?= base_url('forgotPassword') ?>">Forgot Password?</a>
+                        <a href="<?= base_url('register') ?>">Don't have an account? Register</a>
                     </div>
+                </form>
+
             </div>
-            </form>
         </div>
     </div>
-    </div>
 </body>
-
 </html>

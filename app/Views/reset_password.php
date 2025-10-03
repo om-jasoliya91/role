@@ -19,7 +19,7 @@
         </div>
     <?php endif; ?>
 
-    <form method="post" action="<?= base_url("reset-password/$id/$token") ?>">
+    <form method="post" action="<?= base_url("reset-password/$id") ?>">
         <?= csrf_field() ?>
         <div class="mb-3">
             <label class="form-label">New Password</label>

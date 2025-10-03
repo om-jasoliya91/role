@@ -19,9 +19,10 @@ class UserModel extends Model
         'gender',
         'address',
         'profile_pic',
+        'role',  // ✅ added
         'created_at',
         'updated_at'
     ];
 
-    protected $useTimestamps = true;
+    protected $useTimestamps = true;  // works if you have created_at & updated_at
 }

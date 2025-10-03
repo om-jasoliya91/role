@@ -8,7 +8,7 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 
 // Registration Routes
-$routes->get('register', 'Register::index');
+$routes->get('register', 'Register::register');
 $routes->post('registerPost', 'Register::registerPost');
 $routes->get('view', 'Register::view');
 
@@ -65,7 +65,8 @@ $routes->get('encrypt-demo', 'EncryptDemo::encrypt');
 $routes->get('decrypt-demo/(:any)', 'EncryptDemo::decrypt/$1');
 
 // Forgot password flow
-$routes->get('forgotPassword', 'Login::forgotPasswordForm');
-$routes->post('forgotPassword', 'Login::sendResetLink');
-$routes->get('resetPassword/(:num)/(:any)', 'Login::resetPassword/$1/$2');
-$routes->post('resetPassword/(:num)/(:any)', 'Login::updatePassword/$1/$2');
+$routes->get('/forgot-password', 'Login::forgotPasswordForm');
+$routes->post('/forgotPassword', 'Login::sendResetLink');
+
+$routes->get('reset-password/(:num)', 'Login::resetPassword/$1');
+$routes->post('reset-password/(:num)', 'Login::updatePassword/$1');

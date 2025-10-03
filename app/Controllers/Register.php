@@ -13,37 +13,68 @@ class Register extends Controller
     }
 
     /**
-     * Show register form
+     * Show Add Student form (admin)
      */
-    public function index()
+    public function stdAdd()
     {
         $data = [
-            'action'     => base_url('registerPost'),
-            'buttonText' => 'Register',
-            'title'      => 'Register',
-            'layout'     => null,
+            'action' => base_url('admin/stdAddPost'),
+            'buttonText' => 'Add Student',
+            'title' => 'Add Student (Admin)',
+            'layout' => 'layouts/admin',
         ];
 
         return view('register', $data);
     }
 
     /**
-     * Handle register form submit
+     * Show Register form for public users
+     */
+    public function register()
+    {
+        $data = [
+            'action' => base_url('registerPost'),
+            'buttonText' => 'Register',
+            'title' => 'Register',
+            'layout' => null,
+        ];
+
+        return view('register', $data);
+    }
+
+    /**
+     * Handle POST request: Admin adding student
+     */
+    public function stdAddPost()
+    {
+        return $this->saveUser('admin/stdView', 'Student added successfully.');
+    }
+
+    /**
+     * Handle POST request: Public registration
      */
     public function registerPost()
+    {
+        return $this->saveUser('login', 'Registration successful. Please login.');
+    }
+
+    /**
+     * Common method for saving user data
+     */
+    private function saveUser(string $redirectUrl, string $successMessage)
     {
         $model = new UserModel();
 
         // Validation rules
         $rules = [
-            'username'    => 'required|min_length[3]|max_length[20]',
-            'email'       => 'required|valid_email|is_unique[users.email]',
-            'password'    => 'required|min_length[6]',
-            'full_name'   => 'required',
-            'phone'       => 'required',
-            'age'         => 'required|integer',
-            'gender'      => 'required',
-            'address'     => 'required',
+            'username' => 'required|min_length[3]|max_length[20]|is_unique[users.username]',
+            'email' => 'required|valid_email|is_unique[users.email]',
+            'password' => 'required|min_length[6]',
+            'full_name' => 'required|min_length[3]',
+            'phone' => 'required|numeric|min_length[10]|max_length[15]',
+            'age' => 'required|integer|greater_than_equal_to[1]|less_than_equal_to[120]',
+            'gender' => 'required|in_list[Male,Female,Other]',
+            'address' => 'required|min_length[5]',
             'profile_pic' => 'uploaded[profile_pic]|is_image[profile_pic]|max_size[profile_pic,2048]',
         ];
 
@@ -54,33 +85,33 @@ class Register extends Controller
                 ->with('errors', $this->validator->getErrors());
         }
 
-        // File upload
+        // Handle file upload
         $img = $this->request->getFile('profile_pic');
         $imgName = null;
+
         if ($img && $img->isValid() && !$img->hasMoved()) {
             $imgName = $img->getRandomName();
-            $img->move(FCPATH . 'uploads', $imgName);
+            $img->move(FCPATH . 'uploads/', $imgName);
         }
 
         // Hash password
         $hashedPassword = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
 
-        // Prepare data
+        // Data array
         $data = [
-            'username'     => $this->request->getPost('username'),
-            'email'        => $this->request->getPost('email'),
-            'password_hash'=> $hashedPassword,
-            'full_name'    => $this->request->getPost('full_name'),
-            'phone'        => $this->request->getPost('phone'),
-            'age'          => $this->request->getPost('age'),
-            'gender'       => $this->request->getPost('gender'),
-            'address'      => $this->request->getPost('address'),
-            'profile_pic'  => $imgName,
+            'username' => $this->request->getPost('username'),
+            'email' => $this->request->getPost('email'),
+            'password_hash' => $hashedPassword,
+            'full_name' => $this->request->getPost('full_name'),
+            'phone' => $this->request->getPost('phone'),
+            'age' => $this->request->getPost('age'),
+            'gender' => $this->request->getPost('gender'),
+            'address' => $this->request->getPost('address'),
+            'profile_pic' => $imgName,
         ];
 
-        // Save
-        $model->save($data);
+        $model->insert($data);
 
-        return redirect()->to(base_url('login'))->with('success', 'Registration successful. Please login.');
+        return redirect()->to(base_url($redirectUrl))->with('success', $successMessage);
     }
 }
