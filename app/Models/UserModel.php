@@ -19,7 +19,7 @@ class UserModel extends Model
         'gender',
         'address',
         'profile_pic',
-        'role',  // ✅ added
+        'role',  
         'created_at',
         'updated_at'
     ];
