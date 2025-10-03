@@ -53,12 +53,12 @@ class Login extends BaseController
         return redirect()->to('/login');
     }
 
-   public function forgotPasswordForm()
-{
-    return view('forgotPassword');
-}
+    public function forgotPasswordForm()
+    {
+        return view('forgotPassword');
+    }
 
-public function sendResetLink()
+ public function sendResetLink()
 {
     $email = $this->request->getPost('email');
     $userModel = new UserModel();
@@ -68,7 +68,8 @@ public function sendResetLink()
         return redirect()->back()->with('error', 'Email not found!');
     }
 
-    $resetLink = base_url("resetPassword/{$user['id']}");
+    // ✅ fixed: use reset-password (not reset_password)
+    $resetLink = base_url("reset-password/{$user['id']}");
 
     $emailService = \Config\Services::email();
     $emailService->setTo($email);
@@ -83,34 +84,34 @@ public function sendResetLink()
     }
 }
 
-public function resetPassword($id)
-{
-    $userModel = new UserModel();
-    $user = $userModel->find($id);
+    public function resetPassword($id)
+    {
+        $userModel = new UserModel();
+        $user = $userModel->find($id);
 
-    if (!$user) {
-        return redirect()->to('/login')->with('error', 'Invalid reset link.');
+        if (!$user) {
+            return redirect()->to('/login')->with('error', 'Invalid reset link.');
+        }
+
+        return view('reset_password', ['id' => $id]);
     }
 
-    return view('reset_password', ['id' => $id]);
-}
+    public function updatePassword($id)
+    {
+        $rules = [
+            'password' => 'required|min_length[6]',
+            'confirm_password' => 'matches[password]'
+        ];
 
-public function updatePassword($id)
-{
-    $rules = [
-        'password' => 'required|min_length[6]',
-        'confirm_password' => 'matches[password]'
-    ];
+        if (!$this->validate($rules)) {
+            return redirect()->back()->with('errors', $this->validator->getErrors());
+        }
 
-    if (!$this->validate($rules)) {
-        return redirect()->back()->with('errors', $this->validator->getErrors());
+        $newPassword = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
+
+        $userModel = new UserModel();
+        $userModel->update($id, ['password_hash' => $newPassword]);
+
+        return redirect()->to('/login')->with('success', 'Password updated successfully! You can now log in.');
     }
-
-    $newPassword = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
-
-    $userModel = new UserModel();
-    $userModel->update($id, ['password_hash' => $newPassword]);
-
-    return redirect()->to('/login')->with('success', 'Password updated successfully! You can now log in.');
-}
 }

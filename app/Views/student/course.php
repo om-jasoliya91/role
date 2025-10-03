@@ -1,9 +1,10 @@
 <?= $this->extend('layouts/main') ?>
 <?= $this->section('content') ?>
 
-<div class="container my-5">
-    <h1 class="mb-5 text-center fw-bold text-primary display-5">Available Courses</h1>
+<div class="courses-container">
+    <h1 class="page-title">Available Courses</h1>
 
+    <!-- Flash Messages -->
     <?php
     $alertTypes = [
         'success' => 'success',
@@ -11,89 +12,150 @@
         'info' => 'info'
     ];
     ?>
-
-    <!-- Flash Messages -->
     <?php foreach ($alertTypes as $key => $class): ?>
         <?php if (session()->getFlashdata($key)): ?>
-            <div class="alert alert-<?= esc($class) ?> alert-dismissible fade show shadow-sm" role="alert">
+            <div class="alert alert-<?= esc($class) ?>">
                 <?= session()->getFlashdata($key) ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif; ?>
     <?php endforeach; ?>
 
     <?php if (!empty($courses) && is_array($courses)): ?>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="courses-grid">
             <?php foreach ($courses as $course): ?>
-                <div class="col">
-                    <div class="card h-100 border-0 rounded-4 shadow-sm course-card">
-                        <div class="card-body d-flex flex-column p-4">
-                            <div class="mb-3">
-                                <h5 class="card-title fw-semibold text-primary mb-1"><?= esc($course['course_name']) ?></h5>
-                                <small class="text-muted fst-italic"><?= esc($course['course_code']) ?></small>
-                            </div>
+                <div class="course-card">
 
-                            <ul class="list-unstyled flex-grow-1 mb-4">
-                                <li><strong>Duration:</strong> <?= esc($course['duration']) ?></li>
-                                <li><strong>Price:</strong> $<?= number_format($course['price'], 2) ?></li>
-                                <li>
-                                    <strong>Status:</strong>
-                                    <?php if (strtolower($course['status']) === 'active'): ?>
-                                        <span class="badge bg-success">Active</span>
-                                    <?php else: ?>
-                                        <span class="badge bg-danger">Inactive</span>
-                                    <?php endif; ?>
-                                </li>
-                            </ul>
+                    <!-- Header -->
+                    <div class="course-header">
+                        <h3><?= esc($course['course_name']) ?></h3>
+                        <small><?= esc($course['course_code']) ?></small>
+                    </div>
 
-                            <?php if (in_array($course['id'], $enrolledCourseIds)): ?>
-                                <button class="btn btn-outline-secondary mt-auto rounded-pill fw-semibold" disabled>
-                                    <i class="bi bi-check-circle-fill me-2"></i> Already Enrolled
-                                </button>
-                            <?php else: ?>
-                                <a href="<?= base_url('student/course/' . esc($course['id'])) ?>"
-                                   class="btn btn-primary mt-auto rounded-pill fw-semibold">
-                                    <i class="bi bi-pencil-square me-2"></i> Apply Now
-                                </a>
-                            <?php endif; ?>
-                        </div>
+                    <!-- Info -->
+                    <div class="course-body">
+                        <ul>
+                            <li><strong>Duration:</strong> <?= esc($course['duration']) ?></li>
+                            <li><strong>Price:</strong> $<?= number_format($course['price'], 2) ?></li>
+                            <li>
+                                <strong>Status:</strong>
+                                <?php if (strtolower($course['status']) === 'active'): ?>
+                                    <span class="badge active">Active</span>
+                                <?php else: ?>
+                                    <span class="badge inactive">Inactive</span>
+                                <?php endif; ?>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="course-footer">
+                        <?php if (in_array($course['id'], $enrolledCourseIds)): ?>
+                            <button class="btn disabled">✔ Already Enrolled</button>
+                        <?php else: ?>
+                            <a href="<?= base_url('student/course/' . esc($course['id'])) ?>" class="btn primary">
+                                Apply Now →
+                            </a>
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php endforeach; ?>
         </div>
     <?php else: ?>
-        <div class="alert alert-warning text-center shadow-sm">No courses available.</div>
+        <div class="alert warning">No courses available.</div>
     <?php endif; ?>
 </div>
 
 <style>
-    /* Hover effect on cards */
-    .course-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        cursor: pointer;
-        background-color: #ffffff;
-    }
-    .course-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 30px rgba(0, 123, 255, 0.2);
-    }
+/* Grid Layout */
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Force 3 per row */
+    gap: 25px;
+    width: 1100px;
+}
 
-    /* Button tweaks */
-    .btn-primary {
-        transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .btn-primary:hover {
-        background-color: #0056b3;
-        box-shadow: 0 8px 20px rgba(0, 86, 179, 0.4);
-    }
+/* Card */
+.course-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.course-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
 
-    /* Card title and small styling */
-    .card-title {
-        font-size: 1.25rem;
-    }
-    small.fst-italic {
-        font-size: 0.9rem;
-    }
+/* Header */
+.course-header {
+    padding: 15px 20px 0;
+}
+.course-header h3 {
+    font-size: 1.2rem;
+    color: #224abe;
+    margin-bottom: 5px;
+}
+.course-header small {
+    color: #777;
+    font-style: italic;
+}
+
+/* Body */
+.course-body {
+    padding: 10px 20px;
+    flex-grow: 1;
+}
+.course-body ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.course-body li {
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* Badge */
+.badge {
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+.badge.active { background: #d4edda; color: #155724; }
+.badge.inactive { background: #f8d7da; color: #721c24; }
+
+/* Footer */
+.course-footer {
+    padding: 15px 20px 20px;
+    text-align: center;
+}
+.btn {
+    display: inline-block;
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: 0.3s ease;
+    font-weight: bold;
+}
+.btn.primary {
+    background: linear-gradient(135deg, #4e73df, #224abe);
+    color: #fff;
+}
+.btn.primary:hover {
+    background: linear-gradient(135deg, #224abe, #4e73df);
+    transform: scale(1.05);
+}
+.btn.disabled {
+    background: #ddd;
+    color: #777;
+    cursor: not-allowed;
+}
 </style>
 
 <?= $this->endSection() ?>

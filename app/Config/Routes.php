@@ -66,6 +66,7 @@ $routes->post('forgotPassword', 'Login::sendResetLink');
 $routes->get('reset-password/(:num)', 'Login::resetPassword/$1');
 $routes->post('reset-password/(:num)', 'Login::updatePassword/$1');
 
+
 $routes->get('lang', 'Home::index2');
 $routes->get('lang/(:segment)', 'Home::switch/$1');
 

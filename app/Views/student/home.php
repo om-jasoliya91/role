@@ -1,63 +1,168 @@
-    <?= $this->extend('layouts/main') ?>
+<?= $this->extend('layouts/main') ?>
 
-    <?= $this->section('content') ?>
+<?= $this->section('content') ?>
 
-    <?= $this->endSection() ?>
-    <?= $this->extend('layouts/main') ?>
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1>🚀 Welcome to Student Portal</h1>
+        <p>Unlock your future with high-quality courses, expert guidance, and flexible learning.</p>
+        <a href="<?= base_url('student/course') ?>" class="btn-main">
+            Browse Courses →
+        </a>
+    </div>
+</section>
 
-    <?= $this->section('content') ?>
-
-    <!-- Hero Section -->
-    <section class="bg-primary text-white text-center py-5">
-        <div class="container">
-            <h1 class="display-4 fw-bold mb-3">Welcome to Student Portal</h1>
-            <p class="lead mb-4">Explore a variety of courses and take your learning to the next level with us.</p>
-            <a href="<?= base_url('student/course') ?>" class="btn btn-lg btn-light text-primary fw-semibold rounded-pill px-4 shadow">
-                Browse Courses
-                <i class="bi bi-arrow-right ms-2"></i>
-            </a>
+<!-- Features Section -->
+<section class="features">
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="icon">📘</div>
+            <h3>Wide Range of Courses</h3>
+            <p>Choose from various courses tailored to your interests and career goals.</p>
         </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="py-5">
-        <div class="container">
-            <div class="row text-center g-4">
-                <div class="col-md-4">
-                    <div class="p-4 border rounded-4 shadow-sm h-100">
-                        <i class="bi bi-journal-bookmark fs-1 text-primary mb-3"></i>
-                        <h5 class="fw-semibold mb-2">Wide Range of Courses</h5>
-                        <p class="text-muted">Choose from various courses tailored to your interests and career goals.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="p-4 border rounded-4 shadow-sm h-100">
-                        <i class="bi bi-people fs-1 text-primary mb-3"></i>
-                        <h5 class="fw-semibold mb-2">Expert Instructors</h5>
-                        <p class="text-muted">Learn from experienced professionals and industry experts.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="p-4 border rounded-4 shadow-sm h-100">
-                        <i class="bi bi-clock-history fs-1 text-primary mb-3"></i>
-                        <h5 class="fw-semibold mb-2">Flexible Learning</h5>
-                        <p class="text-muted">Access courses anytime, anywhere, at your own pace.</p>
-                    </div>
-                </div>
-            </div>
+        <div class="feature-card">
+            <div class="icon">👩‍🏫</div>
+            <h3>Expert Instructors</h3>
+            <p>Learn from experienced professionals and industry experts.</p>
         </div>
-    </section>
-
-    <!-- Call to Action Section -->
-    <section class="bg-light py-5 text-center">
-        <div class="container">
-            <h2 class="fw-bold mb-3">Ready to start learning?</h2>
-            <p class="mb-4 text-secondary">Sign up today and unlock your full potential.</p>
-            <a href="<?= base_url('register') ?>" class="btn btn-primary btn-lg rounded-pill px-5 shadow">
-                Register Now
-                <i class="bi bi-person-plus ms-2"></i>
-            </a>
+        <div class="feature-card">
+            <div class="icon">⏰</div>
+            <h3>Flexible Learning</h3>
+            <p>Access courses anytime, anywhere, at your own pace.</p>
         </div>
-    </section>
+    </div>
+</section>
 
-    <?= $this->endSection() ?>
+<!-- Call to Action -->
+<section class="cta">
+    <div class="cta-box">
+        <h2>🎯 Ready to start learning?</h2>
+        <p>Join thousands of students already building their future with us.</p>
+        <a href="<?= base_url('register') ?>" class="btn-main big">
+            Register Now +
+        </a>
+    </div>
+</section>
+
+<style>
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; color: #333; line-height: 1.6; }
+
+    /* Hero */
+    .hero {
+        position: relative;
+     
+        color: #fff;
+        text-align: center;
+        padding: 120px 20px;
+        width: 1100px;
+    }
+    .hero-overlay {
+        position: absolute;
+        top:0; left:0; right:0; bottom:0;
+        background: rgba(34, 74, 190, 0.8);
+    }
+    .hero-content {
+        position: relative;
+        max-width: 700px;
+        margin: auto;
+        z-index: 2;
+    }
+    .hero h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        line-height: 1.2;
+    }
+    .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+    }
+
+    /* Features */
+    .features {
+        padding: 70px 20px;
+        background: #f9f9f9;
+    }
+    .features-grid {
+        max-width: 1100px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+    }
+    .feature-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    .feature-card .icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+    }
+    .feature-card h3 {
+        margin-bottom: 12px;
+        font-size: 1.3rem;
+        color: #224abe;
+    }
+    .feature-card p {
+        color: #555;
+        font-size: 1rem;
+    }
+
+    /* Call to Action */
+    .cta {
+        background: linear-gradient(135deg, #224abe, #4e73df);
+        color: #fff;
+        padding: 80px 20px;
+        text-align: center;
+        width: 1100px;
+    }
+    .cta-box {
+        max-width: 650px;
+        margin: auto;
+    }
+    .cta h2 {
+        font-size: 2.4rem;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+    .cta p {
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+        color: #e0e0e0;
+    }
+
+    /* Buttons */
+    .btn-main {
+        display: inline-block;
+        padding: 14px 32px;
+        border-radius: 35px;
+        background: #ffd700;
+        color: #224abe;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    .btn-main:hover {
+        background: #ffb700;
+        transform: scale(1.08);
+    }
+    .btn-main.big {
+        font-size: 1.2rem;
+        padding: 16px 38px;
+    }
+</style>
+
+<?= $this->endSection() ?>
