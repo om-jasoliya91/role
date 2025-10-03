@@ -9,10 +9,10 @@
 <div class="container mt-5" style="max-width: 400px;">
     <h3 class="text-center">Reset Password</h3>
 
-    <?php if(session()->getFlashdata('errors')): ?>
+    <?php if (session()->getFlashdata('errors')): ?>
         <div class="alert alert-danger">
             <ul>
-                <?php foreach(session()->getFlashdata('errors') as $error): ?>
+                <?php foreach (session()->getFlashdata('errors') as $error): ?>
                     <li><?= esc($error) ?></li>
                 <?php endforeach; ?>
             </ul>

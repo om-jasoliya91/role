@@ -12,14 +12,6 @@ class Login extends BaseController
         return view('login');
     }
 
-    public function homeView()
-    {
-        if (!session()->get('isLoggedIn')) {
-            return redirect()->to('/login')->with('error', 'Please login first.');
-        }
-        return view('home');
-    }
-
     public function authenticate()
     {
         $session = session();
@@ -43,16 +35,13 @@ class Login extends BaseController
                 'user_id' => $user['id'],
                 'user_name' => $user['username'],
                 'email' => $user['email'],
-                'role' => $user['role'],  // ✅ role stored in session
+                'role' => $user['role'],
                 'isLoggedIn' => true
             ]);
 
-            // ✅ Redirect based on role
-            if ($user['role'] === '0') {
-                return redirect()->to('/admin/dashboard');
-            } else {
-                return redirect()->to('/student/home');
-            }
+            return ($user['role'] == '0')
+                ? redirect()->to('/admin/dashboard')
+                : redirect()->to('/student/home');
         }
 
         return redirect()->back()->with('error', 'Invalid Email or Password');
@@ -64,13 +53,11 @@ class Login extends BaseController
         return redirect()->to('/login');
     }
 
-   // Show forgot password form
-public function forgotPasswordForm()
+   public function forgotPasswordForm()
 {
     return view('forgotPassword');
 }
 
-// Handle sending reset link
 public function sendResetLink()
 {
     $email = $this->request->getPost('email');
@@ -81,15 +68,13 @@ public function sendResetLink()
         return redirect()->back()->with('error', 'Email not found!');
     }
 
-    // ✅ Instead of token, just send reset page with user id
-    $resetLink = base_url("reset-password/{$user['id']}");
+    $resetLink = base_url("resetPassword/{$user['id']}");
 
-    // Send email
     $emailService = \Config\Services::email();
     $emailService->setTo($email);
     $emailService->setFrom('your_email@example.com', 'My App');
     $emailService->setSubject('Password Reset Request');
-    $emailService->setMessage("Click this link to reset your password: <a href='{$resetLink}'>Reset Password</a>");
+    $emailService->setMessage("Click here to reset your password: <a href='{$resetLink}'>Reset Password</a>");
 
     if ($emailService->send()) {
         return redirect()->back()->with('success', 'Password reset link sent to your email!');
@@ -98,17 +83,22 @@ public function sendResetLink()
     }
 }
 
-// Show reset form (no token)
 public function resetPassword($id)
 {
+    $userModel = new UserModel();
+    $user = $userModel->find($id);
+
+    if (!$user) {
+        return redirect()->to('/login')->with('error', 'Invalid reset link.');
+    }
+
     return view('reset_password', ['id' => $id]);
 }
 
-// Update password (no token check)
 public function updatePassword($id)
 {
     $rules = [
-        'password'         => 'required|min_length[6]',
+        'password' => 'required|min_length[6]',
         'confirm_password' => 'matches[password]'
     ];
 

@@ -293,6 +293,4 @@ class Student extends BaseController
         fclose($file);
         exit;
     }
-
-
 }

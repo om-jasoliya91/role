@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <a href="<?= base_url('forgot-password') ?>" class="text-decoration-none">Forgot Password?</a>
+                        <a href="<?= base_url('forgotPassword') ?>" class="text-decoration-none">Forgot Password?</a>
                     </div>
 
                     <div class="d-grid">

@@ -1,8 +1,8 @@
 <?php
 $session = session();
 
-if (!$session->get('isLoggedIn') || (int) $session->get('role') !== 1) {
-    header('Location: ' . base_url('login'));
+if (!$session->get('isLoggedIn') || (int)$session->get('role') !== 1) {
+    return redirect()->to('login')->send();
     exit;
 }
 ?>
