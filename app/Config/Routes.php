@@ -8,16 +8,17 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 
 // Registration Routes
-$routes->get('register', 'Register::register');  // Public registration form
-$routes->post('registerPost', 'Register::registerPost');  // Public registration submit
-$routes->get('view', 'Register::view');  // Optional: user view
+$routes->get('register', 'Register::index');
+$routes->post('registerPost', 'Register::registerPost');
+$routes->get('view', 'Register::view');
 
 // Login Routes
-$routes->get('login', 'Login::index');  // Login form
-$routes->post('login', 'Login::authenticate');  // Login submit
-$routes->get('logout', 'Login::logout');  // Logout
+$routes->get('login', 'Login::index');
+$routes->post('login', 'Login::authenticate');
+$routes->get('logout', 'Login::logout');
+$routes->get('home', 'Login::homeView');
 
-// Student Routes (manually prefixed with 'student/')
+// Student Routes
 $routes->get('student/home', 'Student::view');
 $routes->get('student/updateView', 'Student::updateView');
 $routes->post('student/studentupdate', 'Student::updateProfile');
@@ -27,7 +28,7 @@ $routes->get('student/course/(:num)', 'Student::enroll/$1');
 $routes->get('student/enroll', 'Student::enrollView');
 $routes->get('student/export', 'Student::export');
 
-// Admin Routes (manually prefixed with 'admin/')
+// Admin Routes
 $routes->get('admin/dashboard', 'Admin::dashboardView');
 
 // Admin Student Management
@@ -46,9 +47,10 @@ $routes->post('admin/courseEdit/(:num)', 'Admin::courseUpdate/$1');
 // Admin Enrollment View
 $routes->get('admin/enrollView', 'Admin::adminEnrollView');
 
-// Admin Add Student (with admin filter)
+// Admin Add Student
 $routes->get('admin/stdAdd', 'Register::stdAdd', ['filter' => 'admin']);
 $routes->post('admin/stdAddPost', 'Register::stdAddPost', ['filter' => 'admin']);
+
 // Language localization
 $routes->get('lang', 'Home::index2');
 $routes->get('lang/(:segment)', 'Home::switch/$1');
@@ -62,7 +64,8 @@ $routes->get('delete-cookie', 'CookieController::deleteCookie');
 $routes->get('encrypt-demo', 'EncryptDemo::encrypt');
 $routes->get('decrypt-demo/(:any)', 'EncryptDemo::decrypt/$1');
 
-// Forgot password
-$routes->get('forgotPassword', 'Login::forgotPasswordForm');   // Show form
-$routes->post('forgotPassword', 'Login::sendResetLink');       // Handle form submit
-
+// Forgot password flow
+$routes->get('forgotPassword', 'Login::forgotPasswordForm');
+$routes->post('forgotPassword', 'Login::sendResetLink');
+$routes->get('resetPassword/(:num)/(:any)', 'Login::resetPassword/$1/$2');
+$routes->post('resetPassword/(:num)/(:any)', 'Login::updatePassword/$1/$2');

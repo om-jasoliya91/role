@@ -27,7 +27,7 @@
                     <div class="mb-3">
                         <label class="form-label">Username or Email</label>
                         <input type="text" name="username_email" class="form-control"
-                            value="<?= set_value('username_email') ?>" required>
+                           required>
                     </div>
 
                     <div class="mb-3">
@@ -44,13 +44,13 @@
                     </div>
 
                     <div class="text-center mt-3">
-    <a href="<?= base_url('register') ?>">Don't have an account? Register</a> |
-    <a href="<?= base_url('forgotPassword') ?>">Forgot Password?</a>
-</div>
+                        <a href="<?= base_url('register') ?>">Don't have an account? Register</a> |
+                        <a href="<?= base_url('forgotPassword') ?>">Forgot Password?</a>
                     </div>
-                </form>
             </div>
+            </form>
         </div>
+    </div>
     </div>
 </body>
 

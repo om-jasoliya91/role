@@ -10,10 +10,18 @@ class UserModel extends Model
     protected $primaryKey = 'id';
 
     protected $allowedFields = [
-        'username', 'email', 'password_hash', 'full_name', 'phone', 'age', 'gender', 'address', 'profile_pic', 'role'
+        'username',
+        'email',
+        'password_hash',
+        'full_name',
+        'phone',
+        'age',
+        'gender',
+        'address',
+        'profile_pic',
+        'created_at',
+        'updated_at'
     ];
 
     protected $useTimestamps = true;
-
-    // Remove password hashing hooks here because we're handling it manually in controller
 }
