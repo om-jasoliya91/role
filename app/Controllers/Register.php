@@ -114,4 +114,25 @@ class Register extends Controller
 
         return redirect()->to(base_url($redirectUrl))->with('success', $successMessage);
     }
+
+    public function ciInsert()
+    {
+        $model = new \App\Models\CourseModel();
+        $hashedPassword = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT);
+        $imgName = '';  // Example: handle image upload before assigning
+
+        $model->save([
+            'username' => $this->request->getPost('username'),
+            'email' => $this->request->getPost('email'),
+            'password_hash' => $hashedPassword,
+            'full_name' => $this->request->getPost('full_name'),
+            'phone' => $this->request->getPost('phone'),
+            'age' => $this->request->getPost('age'),
+            'gender' => $this->request->getPost('gender'),
+            'address' => $this->request->getPost('address'),
+            'profile_pic' => $imgName
+        ]);
+
+        return redirect()->to('register')->with('success', 'Registration Successfully');
+    }
 }
