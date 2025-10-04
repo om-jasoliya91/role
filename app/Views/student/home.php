@@ -45,7 +45,4 @@
         </a>
     </div>
 </section>
-
-
-  
 <?= $this->endSection() ?>
