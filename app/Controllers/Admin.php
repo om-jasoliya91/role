@@ -294,6 +294,7 @@ class Admin extends BaseController
                 throw new StudentNotFoundException("Student with ID {$id} not found.");
             }
 
+            // hello 
             return view('student_detail', ['student' => $student]);
         } catch (StudentNotFoundException $e) {
             log_message('error', $e->getMessage());
