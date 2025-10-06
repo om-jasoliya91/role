@@ -4,14 +4,8 @@ use CodeIgniter\Router\RouteCollection;
 
 /** @var RouteCollection $routes */
 
-// ----------------------------------------------------
-// Default route
-// ----------------------------------------------------
 $routes->get('/', 'Login::index');  // Show login page as default
 
-// ----------------------------------------------------
-// Registration Routes
-// ----------------------------------------------------
 $routes->get('register', 'Register::register');
 $routes->post('registerPost', 'Register::registerPost');
 $routes->get('view', 'Register::view');
@@ -37,9 +31,6 @@ $routes->group('student', function ($routes) {
     $routes->get('export', 'Student::export');
 });
 
-// ----------------------------------------------------
-// Admin Routes
-// ----------------------------------------------------
 $routes->group('admin', ['filter' => 'admin'], function ($routes) {
     $routes->get('dashboard', 'Admin::dashboardView');
 
