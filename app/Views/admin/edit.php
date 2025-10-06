@@ -32,8 +32,7 @@
             <div class="mb-3">
                 <label for="full_name" class="form-label">Full Name</label>
                 <input type="text" id="full_name" name="full_name" class="form-control" value="<?= esc(old('full_name', $student['full_name'])) ?>" required>
-            </div>
-
+            </div>  
             <div class="mb-3">
                 <label for="phone" class="form-label">Phone</label>
                 <input type="text" id="phone" name="phone" class="form-control" value="<?= esc(old('phone', $student['phone'])) ?>" required>
@@ -54,6 +53,7 @@
                 </select>
             </div>
 
+            
             <div class="mb-3">
                 <label for="address" class="form-label">Address</label>
                 <textarea id="address" name="address" class="form-control" required><?= esc(old('address', $student['address'])) ?></textarea>

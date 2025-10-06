@@ -266,21 +266,11 @@ class Admin extends BaseController
         $courseModel = new CourseModel();
         $enrollModel = new EnrollmentModel();
 
-        // Count all users with role = 1
         $totalUsers = $userModel->where('role', 1)->countAllResults();
-
-        // Count all courses
         $totalCourses = $courseModel->countAllResults();
-
-        // Count all enrollments
         $totalEnroll = $enrollModel->countAllResults();
 
-        // Pass all variables to the view
-        return view('admin/dashboard', [
-            'totalUsers' => $totalUsers,
-            'totalCourses' => $totalCourses,
-            'totalEnroll' => $totalEnroll
-        ]);
+        return view('admin/dashboard', compact('totalUsers', 'totalCourses', 'totalEnroll'));
     }
 
     public function showStudent($id)
@@ -290,18 +280,17 @@ class Admin extends BaseController
         try {
             $student = $studentModel->find($id);
 
-            if (!$student) {
-                throw new StudentNotFoundException("Student with ID {$id} not found.");
+            if (!$student || $student['role'] != 1) {
+                throw new StudentNotFoundException('Student not found.');
             }
-
-            // hello 
-            return view('student_detail', ['student' => $student]);
+            return view('admin/student_detail', [
+                'title' => 'Student Details',
+                'student' => $student
+            ]);
         } catch (StudentNotFoundException $e) {
-            log_message('error', $e->getMessage());
-            return redirect()->to('/error/notfound')->with('error', $e->getMessage());
+            return redirect()->to(base_url('admin/stdView'))->with('error', $e->getMessage());
         } catch (Exception $e) {
-            log_message('critical', $e->getMessage());
-            return redirect()->to('/error/general')->with('error', 'Something went wrong!');
+            return redirect()->to(base_url('admin/stdView'))->with('error', 'An unexpected error occurred.');
         }
     }
 }
