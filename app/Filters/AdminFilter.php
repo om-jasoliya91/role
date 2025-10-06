@@ -6,7 +6,6 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
-
 class AdminFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
@@ -15,7 +14,6 @@ class AdminFilter implements FilterInterface
 
         // Adjust this logic to your auth system
         if (!$session->get('isLoggedIn') || $session->get('role') !== '0') {
-            // Not admin, redirect to login or no access page
             return redirect()->to('/login');
         }
     }

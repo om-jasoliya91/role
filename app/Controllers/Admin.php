@@ -3,9 +3,11 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Exceptions\StudentNotFoundException;
 use App\Models\CourseModel;
 use App\Models\EnrollmentModel;
 use App\Models\UserModel;
+use Exception;
 
 class Admin extends BaseController
 {
@@ -18,7 +20,7 @@ class Admin extends BaseController
     {
         // Ensure admin is logged in
         $session = session();
-        if (!$session->get('isLoggedIn') || (int)$session->get('role') !== 0) {
+        if (!$session->get('isLoggedIn') || (int) $session->get('role') !== 0) {
             return redirect()->to(base_url('login'))->with('error', 'Unauthorized access');
         }
 
@@ -44,10 +46,10 @@ class Admin extends BaseController
         $pager = $userModel->pager;
 
         return view('admin/stdView', [
-            'title'    => 'Student List',
+            'title' => 'Student List',
             'students' => $students,
-            'pager'    => $pager,
-            'search'   => $search
+            'pager' => $pager,
+            'search' => $search
         ]);
     }
 
@@ -279,5 +281,26 @@ class Admin extends BaseController
             'totalCourses' => $totalCourses,
             'totalEnroll' => $totalEnroll
         ]);
+    }
+
+    public function showStudent($id)
+    {
+        $studentModel = new UserModel();
+
+        try {
+            $student = $studentModel->find($id);
+
+            if (!$student) {
+                throw new StudentNotFoundException("Student with ID {$id} not found.");
+            }
+
+            return view('student_detail', ['student' => $student]);
+        } catch (StudentNotFoundException $e) {
+            log_message('error', $e->getMessage());
+            return redirect()->to('/error/notfound')->with('error', $e->getMessage());
+        } catch (Exception $e) {
+            log_message('critical', $e->getMessage());
+            return redirect()->to('/error/general')->with('error', 'Something went wrong!');
+        }
     }
 }
