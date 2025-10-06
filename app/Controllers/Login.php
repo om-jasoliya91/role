@@ -58,31 +58,30 @@ class Login extends BaseController
         return view('forgotPassword');
     }
 
- public function sendResetLink()
-{
-    $email = $this->request->getPost('email');
-    $userModel = new UserModel();
-    $user = $userModel->where('email', $email)->first();
+    public function sendResetLink()
+    {
+        $email = $this->request->getPost('email');
+        $userModel = new UserModel();
+        $user = $userModel->where('email', $email)->first();
 
-    if (!$user) {
-        return redirect()->back()->with('error', 'Email not found!');
+        if (!$user) {
+            return redirect()->back()->with('error', 'Email not found!');
+        }
+
+        $resetLink = base_url("reset-password/{$user['id']}");
+
+        $emailService = \Config\Services::email();
+        $emailService->setTo($email);
+        $emailService->setFrom('your_email@example.com', 'My App');
+        $emailService->setSubject('Password Reset Request');
+        $emailService->setMessage("Click here to reset your password: <a href='{$resetLink}'>Reset Password</a>");
+
+        if ($emailService->send()) {
+            return redirect()->back()->with('success', 'Password reset link sent to your email!');
+        } else {
+            return redirect()->back()->with('error', 'Failed to send email.');
+        }
     }
-
-    // ✅ fixed: use reset-password (not reset_password)
-    $resetLink = base_url("reset-password/{$user['id']}");
-
-    $emailService = \Config\Services::email();
-    $emailService->setTo($email);
-    $emailService->setFrom('your_email@example.com', 'My App');
-    $emailService->setSubject('Password Reset Request');
-    $emailService->setMessage("Click here to reset your password: <a href='{$resetLink}'>Reset Password</a>");
-
-    if ($emailService->send()) {
-        return redirect()->back()->with('success', 'Password reset link sent to your email!');
-    } else {
-        return redirect()->back()->with('error', 'Failed to send email.');
-    }
-}
 
     public function resetPassword($id)
     {
