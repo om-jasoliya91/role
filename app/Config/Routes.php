@@ -73,14 +73,10 @@ $routes->get('set-cookie', 'CookieController::setCookie');
 $routes->get('get-cookie', 'CookieController::getCookie');
 $routes->get('delete-cookie', 'CookieController::deleteCookie');
 
-$routes->get('encrypt-demo', 'EncryptDemo::encrypt');
-$routes->get('decrypt-demo/(:any)', 'EncryptDemo::decrypt/$1');
-
 $routes->get('error/notfound', 'Error::notfound');
 $routes->get('error/general', 'Error::general');
 
-$routes->get('student_detail/(:num)','Admin::showStudent/$1');
-
+$routes->get('student_detail/(:num)', 'Admin::showStudent/$1');
 
 $routes->get('chart-controller', 'ChartController::index');
 $routes->get('chart-controller/get-chart-data', 'ChartController::getChartData');
