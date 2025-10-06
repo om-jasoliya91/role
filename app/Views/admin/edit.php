@@ -75,6 +75,7 @@
                 <input type="file" id="profile_pic" name="profile_pic" class="form-control" accept="image/*">
                 <small class="text-muted">Leave blank to keep current picture.</small>
             </div>
+            
 
             <div class="d-grid">
                 <button type="submit" class="btn btn-primary">Update Student</button>
