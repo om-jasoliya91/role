@@ -12,9 +12,6 @@ class Register extends Controller
         helper(['form', 'url']);
     }
 
-    /**
-     * Show Add Student form (admin)
-     */
     public function stdAdd()
     {
         $data = [
@@ -27,9 +24,6 @@ class Register extends Controller
         return view('register', $data);
     }
 
-    /**
-     * Show Register form for public users
-     */
     public function register()
     {
         $data = [
@@ -42,25 +36,16 @@ class Register extends Controller
         return view('register', $data);
     }
 
-    /**
-     * Handle POST request: Admin adding student
-     */
     public function stdAddPost()
     {
         return $this->saveUser('admin/stdView', 'Student added successfully.');
     }
 
-    /**
-     * Handle POST request: Public registration
-     */
     public function registerPost()
     {
         return $this->saveUser('login', 'Registration successful. Please login.');
     }
 
-    /**
-     * Common method for saving user data
-     */
     private function saveUser(string $redirectUrl, string $successMessage)
     {
         $model = new UserModel();
