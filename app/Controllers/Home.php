@@ -9,11 +9,12 @@ class Home extends BaseController
         return view('welcome_message');
     }
 
-      public function index2()
+    public function index2()
     {
-        return view('lang'); // <-- loads app/Views/lang.php
+        return view('lang');
     }
-        public function switch($lang = 'en')
+
+    public function switch($lang = 'en')
     {
         $session = session();
 
