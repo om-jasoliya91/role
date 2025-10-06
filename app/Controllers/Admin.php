@@ -18,16 +18,16 @@ class Admin extends BaseController
     {
         // Ensure admin is logged in
         $session = session();
-        if (!$session->get('isLoggedIn') || (int) $session->get('role') !== 0) {
+        if (!$session->get('isLoggedIn') || (int)$session->get('role') !== 0) {
             return redirect()->to(base_url('login'))->with('error', 'Unauthorized access');
         }
 
-        $userModel = new \App\Models\UserModel();  // Adjust path if needed
+        $userModel = new UserModel();
 
         // Get search term from query string
         $search = $this->request->getGet('search');
 
-        // Start query: students only
+        // Base query for students (role = 1)
         $query = $userModel->where('role', 1);
 
         if (!empty($search)) {
@@ -39,15 +39,15 @@ class Admin extends BaseController
                 ->groupEnd();
         }
 
-        // Pagination: 10 results per page
+        // Paginate results (5 per page)
         $students = $query->paginate(5);
         $pager = $userModel->pager;
 
         return view('admin/stdView', [
-            'title' => 'Student List',
+            'title'    => 'Student List',
             'students' => $students,
-            'pager' => $pager,
-            'search' => $search,
+            'pager'    => $pager,
+            'search'   => $search
         ]);
     }
 

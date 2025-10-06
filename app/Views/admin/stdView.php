@@ -39,11 +39,12 @@
 }
 </style>
 
-<h2 class="mb-4">Students List</h2>
+<h2 class="mb-4"><?= esc($title) ?></h2>
 
 <form method="get" class="mb-3">
     <div class="input-group">
-        <input type="text" name="search" class="form-control" placeholder="Search by name, email, or phone" value="<?= esc($search ?? '') ?>">
+        <input type="text" name="search" class="form-control" placeholder="Search by name, email, or phone"
+            value="<?= esc($search) ?>">
         <button class="btn btn-primary" type="submit">Search</button>
     </div>
 </form>
@@ -59,49 +60,44 @@
             <th>Age</th>
             <th>Gender</th>
             <th>Address</th>
-            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         <?php if (!empty($students)): ?>
-            <?php foreach ($students as $student): ?>
-                <tr>
-                    <td><?= esc($student['id']) ?></td>
-
-                    <!--  Profile Image with Fallback -->
-                    <td>
-                        <?php
-                        $defaultImg = base_url('images/default-profile.png');
-                        $profilePic = !empty($student['profile_pic']) && file_exists(FCPATH . 'uploads/' . $student['profile_pic'])
-                            ? base_url('uploads/' . $student['profile_pic'])
-                            : $defaultImg;
-                        ?>
-                        <img src="<?= esc($profilePic) ?>" alt="Profile Image" style="width:50px; height:50px; object-fit:cover; border-radius:50%;">
-                    </td>
-
-                    <td><?= esc($student['full_name']) ?></td>
-                    <td><?= esc($student['email']) ?></td>
-                    <td><?= esc($student['phone']) ?></td>
-                    <td><?= esc($student['age']) ?></td>
-                    <td><?= esc($student['gender']) ?></td>
-                    <td><?= esc($student['address']) ?></td>
-                    <td>
-                        <a href="<?= base_url('admin/edit/' . $student['id']) ?>" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="<?= base_url('admin/delete/' . $student['id']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this student?')">Delete</a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
+        <?php foreach ($students as $student): ?>
+        <tr>
+            <td><?= esc($student['id']) ?></td>
+            <td>
+                <?php
+                $defaultImg = base_url('images/default-profile.png');
+                $profilePic = !empty($student['profile_pic']) && file_exists(FCPATH . 'uploads/' . $student['profile_pic'])
+                    ? base_url('uploads/' . $student['profile_pic'])
+                    : $defaultImg;
+                ?>
+                <img src="<?= esc($profilePic) ?>" alt="Profile"
+                    style="width:50px; height:50px; object-fit:cover; border-radius:50%;">
+            </td>
+            <td><?= esc($student['full_name']) ?></td>
+            <td><?= esc($student['email']) ?></td>
+            <td><?= esc($student['phone']) ?></td>
+            <td><?= esc($student['age']) ?></td>
+            <td><?= esc($student['gender']) ?></td>
+            <td><?= esc($student['address']) ?></td>
+        </tr>
+        <?php endforeach; ?>
         <?php else: ?>
-            <tr>
-                <td colspan="9" class="text-center">No students found.</td>
-            </tr>
+        <tr>
+            <td colspan="8" class="text-center">No students found.</td>
+        </tr>
         <?php endif; ?>
     </tbody>
 </table>
 
-<!--  Pagination -->
-<div class="mt-4">
+<!-- Pagination -->
+<?php if ($pager): ?>
+<div class="mt-4 d-flex justify-content-center">
     <?= $pager->links() ?>
 </div>
+<?php endif; ?>
 
 <?= $this->endSection() ?>
