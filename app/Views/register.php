@@ -31,14 +31,14 @@
             <h3 class="mb-4 text-center text-primary"><?= esc($title) ?></h3>
 
             <!-- Flash messages -->
-            <?php if (session()->getFlashdata('success')) : ?>
+            <?php if (session()->getFlashdata('success')): ?>
                 <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
             <?php endif; ?>
 
-            <?php if (session()->getFlashdata('errors')) : ?>
+            <?php if (session()->getFlashdata('errors')): ?>
                 <div class="alert alert-danger">
                     <ul class="mb-0">
-                        <?php foreach (session()->getFlashdata('errors') as $error) : ?>
+                        <?php foreach (session()->getFlashdata('errors') as $error): ?>
                             <li><?= esc($error) ?></li>
                         <?php endforeach; ?>
                     </ul>

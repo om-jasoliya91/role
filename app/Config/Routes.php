@@ -80,3 +80,7 @@ $routes->get('error/notfound', 'Error::notfound');
 $routes->get('error/general', 'Error::general');
 
 $routes->get('student_detail/(:num)','Admin::showStudent/$1');
+
+
+$routes->get('chart-controller', 'ChartController::index');
+$routes->get('chart-controller/get-chart-data', 'ChartController::getChartData');

@@ -33,6 +33,14 @@
         <a href="<?= base_url('admin/enrollView') ?>" class="text-white d-block py-1 text-decoration-none">View Enrollment</a>
     </div>
 
+      <button class="btn btn-toggle align-items-center rounded collapsed text-white px-3 py-2 mt-3" 
+            data-bs-toggle="collapse" data-bs-target="#chart-collapse" aria-expanded="false" aria-controls="chart-collapse">
+        Chart
+    </button>
+       <div class="collapse ps-4" id="chart-collapse">
+        <a href="<?= base_url('chart-controller') ?>" class="text-white d-block py-1 text-decoration-none">Chart View</a>
+    </div>
+
     <div class="mt-auto">
         <a href="<?= base_url('logout') ?>" class="text-white px-3 py-2 d-block text-decoration-none border-top border-secondary">Logout</a>
     </div>
