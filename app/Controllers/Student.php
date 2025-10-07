@@ -162,7 +162,7 @@ class Student extends BaseController
         }
 
         $userId = $session->get('user_id');
-
+        
         $courseModel = new CourseModel();
         $enrollModel = new EnrollmentModel();
 
@@ -246,10 +246,10 @@ class Student extends BaseController
         $userId = $session->get('user_id');
         log_message('debug', 'Logged in user ID: ' . $userId);
 
-        $enrollModel = new \App\Models\EnrollmentModel();
+        $enrollModel = new EnrollmentModel();
         $enrollments = $enrollModel->where('u_id', $userId)->findAll();
 
-        $userModel = new \App\Models\UserModel();
+        $userModel = new UserModel();
         $user = $userModel->find($userId);
 
         return view('student/enroll', [
@@ -267,7 +267,7 @@ class Student extends BaseController
         }
 
         $userId = $session->get('user_id');
-        $enrollModel = new \App\Models\EnrollmentModel();
+        $enrollModel = new EnrollmentModel();
         $enrollments = $enrollModel->getEnrollmentsWithCourse($userId);
 
         if (empty($enrollments)) {
