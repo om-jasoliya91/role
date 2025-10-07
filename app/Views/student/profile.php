@@ -10,7 +10,7 @@
     <div class="alert success">
         <span class="icon">✔</span>
         <?= session()->getFlashdata('success') ?>
-        <button class="close-btn" onclick="this.parentElement.style.display='none'">×</button>
+        <button class="close-btn" onclick="this.parentElement.style.display='none'">x</button>
     </div>
 <?php endif; ?>
 

@@ -57,7 +57,7 @@ class Register extends Controller
             'password' => 'required|min_length[6]',
             'full_name' => 'required|min_length[3]',
             'phone' => 'required|numeric|min_length[10]|max_length[15]',
-            'age' => 'required|integer|greater_than_equal_to[1]|less_than_equal_to[120]',
+            'age' => 'required|integer|greater_than_equal_to[15]|less_than_equal_to[100]',
             'gender' => 'required|in_list[Male,Female,Other]',
             'address' => 'required|min_length[5]',
             'profile_pic' => 'uploaded[profile_pic]|is_image[profile_pic]|max_size[profile_pic,2048]',
@@ -100,3 +100,5 @@ class Register extends Controller
         return redirect()->to(base_url($redirectUrl))->with('success', $successMessage);
     }
 }
+
+

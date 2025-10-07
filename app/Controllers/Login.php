@@ -87,11 +87,9 @@ class Login extends BaseController
     {
         $userModel = new UserModel();
         $user = $userModel->find($id);
-
         if (!$user) {
             return redirect()->to('/login')->with('error', 'Invalid reset link.');
         }
-
         return view('reset_password', ['id' => $id]);
     }
 

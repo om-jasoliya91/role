@@ -3,7 +3,7 @@
 use CodeIgniter\Router\RouteCollection;
 
 /** @var RouteCollection $routes */
-$routes->get('/', 'Login::index');  // Show login page as default
+$routes->get('/', 'Login::index');
 
 $routes->get('register', 'Register::register');
 $routes->post('registerPost', 'Register::registerPost');
@@ -70,3 +70,9 @@ $routes->get('student_detail/(:num)', 'Admin::showStudent/$1');
 
 $routes->get('chart-controller', 'ChartController::index');
 $routes->get('chart-controller/get-chart-data', 'ChartController::getChartData');
+
+// Catch-all route for undefined paths
+$routes->get('(:any)', 'Error::notfound');
+$routes->post('(:any)', 'Error::notfound');
+$routes->set404Override('Error::notfound');
+$routes->setAutoRoute(false);

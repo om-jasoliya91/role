@@ -14,7 +14,7 @@ class Student extends BaseController
     {
         $session = session();
 
-        // ✅ Check if logged in AND role is student (assume role `1` is student)
+        //  Check if logged in AND role is student (assume role `1` is student)
         if (!$session->get('isLoggedIn') || (int) $session->get('role') !== 1) {
             return redirect()->to('/login')->with('error', 'You must be logged in as a student.');
         }
