@@ -12,8 +12,8 @@ Route::get('/author/create', [AuthorController::class, 'create'])->name('author.
 Route::post('/author/store', [AuthorController::class, 'store'])->name('author.store');
 // Route::get('/author/index', [AuthorController::class, 'index'])->name('authors.index');
 
-// this is one to many example 
-Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+// this is one to many example
+Route::get('/posts', [PostController::class, 'allPost'])->name('posts.index');
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 Route::post('/posts/store', [PostController::class, 'store'])->name('posts.store');
 

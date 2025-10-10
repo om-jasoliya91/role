@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function index()
+    public function allPost()
     {
+        $posts = Post::with(['categories', 'author'])->get();
         $authors = Author::all();
         return view('posts.index', compact('posts', 'authors'));
     }
