@@ -52,4 +52,7 @@ class PostController extends Controller
 
         return view('posts.by_author', compact('author', 'posts'));
     }
+
+
+    
 }
