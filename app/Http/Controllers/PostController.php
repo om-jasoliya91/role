@@ -9,7 +9,6 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('author')->get();
         $authors = Author::all();
         return view('posts.index', compact('posts', 'authors'));
     }
